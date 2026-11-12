@@ -14,13 +14,13 @@ INPUT_DIR ?= $(DATAHIVE_ROOT)/samples
 MANIFEST ?= $(PI05_ROOT)/manifests/datahive.jsonl
 TRAIN_CONFIG := pi05_fr3_lora_datahive_state
 EXP_NAME ?= datahive-state
-else ifeq ($(SOURCE),reference)
+else ifneq ($(filter oopsie reference,$(SOURCE)),)
 INPUT_DIR ?= $(ROOT)/data/dataset_hiveboard
 MANIFEST ?= $(ROOT)/training/openpi/experiments/manifests/hiveboard/success_and_suboptimal.jsonl
 TRAIN_CONFIG := pi05_fr3_lora_hiveboard_state
 EXP_NAME ?= hiveboard-state-repro
 else
-$(error SOURCE must be datahive or reference)
+$(error SOURCE must be datahive, oopsie or reference)
 endif
 FRONT_CAMERA ?= front
 WRIST_CAMERA ?= wrist
@@ -76,6 +76,6 @@ resume: check ## Resume EXP_NAME after checking data and normalization.
 evaluate: check ## Evaluate checkpoint 29999 on validation/test; save local JSON.
 	@bash "$(ROOT)/scripts/hiveboard.sh" evaluate
 
-test: ## Test synthetic episodes written by the DataHive API.
+test: ## Run DataHive and original-format integration tests.
 	@test -f "$(DATAHIVE_PATH)/src/datahive/episode.py" || { echo "DataHive checkout not found. Set DATAHIVE_ROOT=/path/to/DataHive." >&2; exit 1; }
 	@cd "$(PI05_ROOT)/openpi" && PYTHONPATH="$(DATAHIVE_PATH)/src$${PYTHONPATH:+:$$PYTHONPATH}" uv run --frozen python -m pytest "$(ROOT)/tests" -q

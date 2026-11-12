@@ -68,3 +68,58 @@ def test_make_test_reports_missing_datahive_checkout(tmp_path):
     )
     assert result.returncode != 0
     assert "DataHive checkout not found" in result.stderr
+
+
+@pytest.mark.parametrize(
+    "source,config",
+    [
+        ("datahive", "pi05_fr3_lora_datahive_state"),
+        ("oopsie", "pi05_fr3_lora_hiveboard_state"),
+        ("reference", "pi05_fr3_lora_hiveboard_state"),
+    ],
+)
+def test_source_selects_the_matching_training_config(source, config):
+    result = subprocess.run(
+        ["make", "-n", "train", f"SOURCE={source}"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert f'"{config}"' in result.stdout
+
+
+def test_oopsie_alias_matches_reference_raw_manifest(tmp_path):
+    import json
+    import sys
+
+    manifest = (
+        ROOT
+        / "training/openpi/experiments/manifests/hiveboard/success_and_suboptimal.jsonl"
+    )
+    for row in map(json.loads, manifest.read_text().splitlines()):
+        path = tmp_path / row["path"]
+        path.touch()
+    outputs = []
+    for source in ("oopsie", "reference"):
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/verify_run.py"),
+                "--source",
+                source,
+                "--raw",
+                str(tmp_path),
+            ],
+            env={
+                key: value
+                for key, value in os.environ.items()
+                if key not in {"SOURCE", "MANIFEST"}
+            },
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        outputs.append(result.stdout)
+    assert outputs[0] == outputs[1]
+    assert "447 episodes" in outputs[0]

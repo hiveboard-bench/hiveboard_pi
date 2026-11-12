@@ -30,7 +30,7 @@ def main() -> None:
     parser.add_argument("--training-ready", action="store_true")
     parser.add_argument(
         "--source",
-        choices=("datahive", "reference"),
+        choices=("datahive", "oopsie", "reference"),
         default=os.environ.get("SOURCE", "datahive"),
     )
     args = parser.parse_args()

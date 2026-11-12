@@ -1,12 +1,13 @@
 # Hiveboard pi0.5
 
-Train pi0.5 LoRA on DataHive recordings. DataHive is the default data source.
+Train pi0.5 LoRA on DataHive recordings or the original Oopsie Hiveboard dataset.
+DataHive is the default data source. Both use separate datasets and normalization assets.
 
 ## Requirements
 
 - Linux with an NVIDIA GPU and a CUDA 12 compatible driver. The reference run used an L40S with 48 GB VRAM.
 - `uv`, `git`, `make`, and `ffmpeg`.
-- Annotated DataHive episodes with absolute Cartesian targets, measured gripper width, and front/wrist RGB videos.
+- DataHive recordings or the original Oopsie Hiveboard dataset, with absolute Cartesian targets, measured gripper width, and front/wrist RGB videos.
 
 Joint-only actions are not supported. Positions and gripper widths must use meters; quaternions must use xyzw order. States and commands must share a clock and run at least at 10 Hz. Videos must start with the first recorded state.
 
@@ -94,7 +95,24 @@ make test DATAHIVE_ROOT=/path/to/DataHive
 Tests require a [DataHive source checkout](https://github.com/hiveboard-bench/DataHive).
 They run on CPU and generate their own episodes and videos in temporary folders.
 
-To use the historical dataset instead, add `SOURCE=reference` to the prepare, train, resume, and evaluate commands.
+## Original Oopsie dataset
+
+The original Oopsie HDF5 reader, fixed train/validation/test splits, and reference
+normalization checks are still supported. Keep the original HDF5 filenames and
+their front/wrist MP4 files together in the input folder.
+
+```bash
+make prepare SOURCE=oopsie INPUT_DIR=/path/to/dataset_hiveboard
+make train SOURCE=oopsie EXP_NAME=oopsie-run
+make resume SOURCE=oopsie EXP_NAME=oopsie-run
+make evaluate SOURCE=oopsie EXP_NAME=oopsie-run
+```
+
+Use `SOURCE=oopsie` for every command related to this dataset. `SOURCE=reference`
+remains an equivalent alias. This mode uses the original 447-episode manifest
+(359 train / 44 validation / 44 test), config `pi05_fr3_lora_hiveboard_state`, and
+dataset prefix `local/fr3_hiveboard`. DataHive uses config
+`pi05_fr3_lora_datahive_state` and prefix `local/fr3_datahive`.
 
 ## Source and licenses
 

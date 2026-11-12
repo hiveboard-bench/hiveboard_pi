@@ -5,7 +5,7 @@
     "datahive_episode_v0",
     "datahive_episode_v1"
   ],
-  "tests": "19 tests passed after English and Git-readiness review, including actual DataHive API fixtures and smoke checkpoint orchestration.",
+  "tests": "25 tests passed, covering DataHive APIs, original Oopsie HDF5 conversion, unchanged source videos, source selection and shell orchestration.",
   "cli": "make prepare tested end to end on synthetic DataHive samples with all three splits",
   "reference_mode": "Model and optimizer checked against archived W&B configuration; reference dataset mode retained",
   "not_run": [

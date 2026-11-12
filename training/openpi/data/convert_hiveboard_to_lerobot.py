@@ -99,8 +99,10 @@ def convert(
     import lerobot.common.datasets.lerobot_dataset as lerobot_dataset_module
     from lerobot.common.datasets import video_utils
 
+    if source_format == "oopsie":
+        source_format = "reference"
     if source_format not in {"reference", "datahive"}:
-        raise ValueError("source_format must be reference or datahive")
+        raise ValueError("source_format must be datahive, oopsie or reference")
     from datahive_adapter import read_episode, selected_frames
 
     reader_options = dict(

@@ -6,6 +6,8 @@ export HF_LEROBOT_HOME="$PI05_ROOT/lerobot"
 export XLA_PYTHON_CLIENT_MEM_FRACTION="${XLA_PYTHON_CLIENT_MEM_FRACTION:-0.80}"
 openpi="$PI05_ROOT/openpi"
 export SOURCE="${SOURCE:-datahive}"
+# Keep one implementation for the original Oopsie dataset and its reference alias.
+[[ "$SOURCE" != oopsie ]] || export SOURCE=reference
 if [[ "$SOURCE" == datahive ]]; then
   config=pi05_fr3_lora_datahive_state
   prefix=local/fr3_datahive
@@ -15,7 +17,7 @@ elif [[ "$SOURCE" == reference ]]; then
   prefix=local/fr3_hiveboard
   export MANIFEST="${MANIFEST:-$bundle/training/openpi/experiments/manifests/hiveboard/success_and_suboptimal.jsonl}"
 else
-  echo 'SOURCE must be datahive or reference' >&2; exit 2
+  echo 'SOURCE must be datahive, oopsie or reference' >&2; exit 2
 fi
 experiment="${EXP_NAME:-datahive-state}"
 export MANIFEST="$(realpath -m -- "$MANIFEST")"
