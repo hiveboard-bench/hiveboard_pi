@@ -96,12 +96,6 @@ They run on CPU and generate their own episodes and videos in temporary folders.
 
 To use the historical dataset instead, add `SOURCE=reference` to the prepare, train, resume, and evaluate commands.
 
-## Robot deployment
-
-This package includes the OpenPI policy server. The FR3 ROS bridge, controllers, and camera setup are still required from the robot workspace. Serve DataHive checkpoints with config `pi05_fr3_lora_datahive_state`, including their normalization assets.
-
-The adapter was tested with synthetic episodes created by the DataHive APIs. Real DataHive training and physical robot deployment have not been tested yet.
-
 ## Source and licenses
 
 The OpenPI source is included at a pinned revision, with project-specific FR3
