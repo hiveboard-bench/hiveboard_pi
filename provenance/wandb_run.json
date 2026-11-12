@@ -1,0 +1,89 @@
+{
+  "url": "https://forge.coreweave.com/wandb/diffusion_policies/openpi-fr3/runs/0pczxy2h",
+  "id": "0pczxy2h",
+  "name": "hiveboard-state",
+  "state": "finished",
+  "config": {
+    "data": {
+      "assets": {
+        "asset_id": null,
+        "assets_dir": null
+      },
+      "repo_id": "local/fr3_hiveboard_train",
+      "base_config": {
+        "repo_id": null,
+        "asset_id": null,
+        "datasets": [],
+        "norm_stats": null,
+        "action_space": null,
+        "rlds_data_dir": null,
+        "data_transforms": {
+          "inputs": [],
+          "outputs": []
+        },
+        "model_transforms": {
+          "inputs": [],
+          "outputs": []
+        },
+        "prompt_from_task": true,
+        "repack_transforms": {
+          "inputs": [],
+          "outputs": []
+        },
+        "use_quantile_norm": false,
+        "action_sequence_keys": [
+          "actions"
+        ]
+      }
+    },
+    "name": "pi05_fr3_lora_hiveboard_state",
+    "seed": 42,
+    "model": {
+      "pi05": true,
+      "dtype": "bfloat16",
+      "action_dim": 32,
+      "max_token_len": 200,
+      "action_horizon": 10,
+      "paligemma_variant": "gemma_2b_lora",
+      "discrete_state_input": true,
+      "pytorch_compile_mode": "max-autotune",
+      "action_expert_variant": "gemma_300m_lora"
+    },
+    "resume": false,
+    "exp_name": "hiveboard-state",
+    "ema_decay": null,
+    "optimizer": {
+      "b1": 0.9,
+      "b2": 0.95,
+      "eps": 1e-08,
+      "weight_decay": 1e-10,
+      "clip_gradient_norm": 1
+    },
+    "overwrite": false,
+    "batch_size": 32,
+    "keep_period": null,
+    "lr_schedule": {
+      "peak_lr": 2.5e-05,
+      "decay_lr": 2.5e-06,
+      "decay_steps": 30000,
+      "warmup_steps": 1000
+    },
+    "num_workers": 2,
+    "fsdp_devices": 1,
+    "log_interval": 100,
+    "project_name": "openpi-fr3",
+    "freeze_filter": "All(PathRegex(pattern=re.compile('.*llm.*'), sep='/'), Not(PathRegex(pattern=re.compile('.*lora.*'), sep='/')))",
+    "save_interval": 5000,
+    "wandb_enabled": true,
+    "weight_loader": {
+      "params_path": "gs://openpi-assets/checkpoints/pi05_base/params"
+    },
+    "assets_base_dir": "./assets",
+    "num_train_steps": 30000,
+    "policy_metadata": null,
+    "checkpoint_base_dir": "./checkpoints",
+    "pytorch_weight_path": null,
+    "pytorch_training_precision": "bfloat16"
+  },
+  "notes": "**pi05_fr3_lora_hiveboard_state** / `hiveboard-state` started 2026-10-20\n\n**Dataset** `local/fr3_hiveboard_train`: 359 episodes, 69667 frames @ 10 Hz\n  - grasp the key, insert it vertically into the lock, and turn it to unlock: 43 episodes, 10152 frames\n  - move the circuit breaker toggle to the opposite position and hold it: 95 episodes, 11143 frames\n  - open the button cover, then press the button: 42 episodes, 7974 frames\n  - rotate the ball valve handle 90 degrees: 84 episodes, 9948 frames\n  - rotate the big gate valve handwheel half a turn to open: 47 episodes, 14934 frames\n  - rotate the small gate valve handwheel half a turn to open: 48 episodes, 15516 frames\n**Held out**: validation 44 episodes, 8595 frames @ 10 Hz; test 44 episodes, 8520 frames @ 10 Hz\n\n**Model**: pi0.5 LoRA (gemma_2b_lora + gemma_300m_lora), action horizon 10, state input discretized into the prompt\n**Init**: `gs://openpi-assets/checkpoints/pi05_base/params`\n**Training**: batch 32, 30000 steps, cosine LR warmup 1000 -> peak 2.5e-05 -> 2.5e-06 at 30000, grad clip 1.0, EMA None, seed 42, checkpoints every 5000 (kept every None)\n**Pipeline**: actions anchored to the observation state (`Fr3Inputs.anchored_actions`); idle leading frames dropped (7+ unchanged commands); state quaternion kept on the home hemisphere\n**Code**: hiveboard_dataset `9807007`, openpi `215abfb+dirty`\n**Norm stats**: sha256 `356b7d37c12b`, dataset fingerprint `6436344efc48`"
+}

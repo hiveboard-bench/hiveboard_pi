@@ -1,0 +1,14 @@
+{
+  "episodes": {
+    "test": 44,
+    "train": 359,
+    "validation": 44
+  },
+  "converted_frames": {
+    "test": 8520,
+    "train": 69667,
+    "validation": 8595
+  },
+  "all_894_videos_present": true,
+  "method": "Historical episode_arrays on all 447 local HDF5 files; no video decoding or training."
+}

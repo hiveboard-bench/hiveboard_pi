@@ -1,0 +1,84 @@
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -17,3 +17,4 @@ import openpi.models.tokenizer as _tokenizer
+ import openpi.policies.aloha_policy as aloha_policy
+ import openpi.policies.droid_policy as droid_policy
++import openpi.policies.fr3_policy as fr3_policy
+ import openpi.policies.libero_policy as libero_policy
+@@ -337,5 +338,33 @@ class LeRobotLiberoDataConfig(DataConfigFactory):
+         )
+ 
++@dataclasses.dataclass(frozen=True)
++class LeRobotFr3DataConfig(DataConfigFactory):
++    @override
++    def create(self, assets_dirs: pathlib.Path, model_config: _model.BaseModelConfig) -> DataConfig:
++        repack_transform = _transforms.Group(
++            inputs=[
++                _transforms.RepackTransform(
++                    {
++                        "observation/front_image": "front_image",
++                        "observation/wrist_image": "wrist_image",
++                        "observation/state": "state",
++                        "actions": "actions",
++                        "prompt": "prompt",
++                    }
++                )
++            ]
++        )
++        data_transforms = _transforms.Group(
++            inputs=[fr3_policy.Fr3Inputs(model_type=model_config.model_type)],
++            outputs=[fr3_policy.Fr3Outputs()],
++        )
++        return dataclasses.replace(
++            self.create_base_config(assets_dirs, model_config),
++            repack_transforms=repack_transform,
++            data_transforms=data_transforms,
++            model_transforms=ModelTransformFactory()(model_config),
++        )
++
+ 
+ @dataclasses.dataclass(frozen=True)
+ class RLDSDroidDataConfig(DataConfigFactory):
+@@ -768,4 +798,41 @@ _CONFIGS = [
+         num_train_steps=30_000,
+     ),
++    TrainConfig(
++        name="pi05_fr3_lora_success_and_suboptimal",
++        project_name="openpi-fr3",
++        model=pi0_config.Pi0Config(
++            pi05=True,
++            action_horizon=10,
++            discrete_state_input=False,
++            paligemma_variant="gemma_2b_lora",
++            action_expert_variant="gemma_300m_lora",
++        ),
++        data=LeRobotFr3DataConfig(
++            repo_id="local/fr3_hiveboard_success_and_suboptimal_train",
++            base_config=DataConfig(prompt_from_task=True),
++        ),
++        batch_size=8,
++        lr_schedule=_optimizer.CosineDecaySchedule(
++            warmup_steps=1_000,
++            peak_lr=5e-5,
++            decay_steps=30_000,
++            decay_lr=5e-6,
++        ),
++        optimizer=_optimizer.AdamW(clip_gradient_norm=1.0),
++        weight_loader=weight_loaders.CheckpointWeightLoader(
++            "gs://openpi-assets/checkpoints/pi05_base/params"
++        ),
++        num_train_steps=30_000,
++        save_interval=5_000,
++        keep_period=5_000,
++        freeze_filter=pi0_config.Pi0Config(
++            pi05=True,
++            action_horizon=10,
++            discrete_state_input=False,
++            paligemma_variant="gemma_2b_lora",
++            action_expert_variant="gemma_300m_lora",
++        ).get_freeze_filter(),
++        ema_decay=None,
++    ),
+     #
+     # Fine-tuning Aloha configs.

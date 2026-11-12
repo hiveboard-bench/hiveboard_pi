@@ -1,0 +1,6 @@
+{
+  "config": "pi05_fr3_lora_hiveboard_state",
+  "dataset_fingerprint": "6436344efc48220cbdca953dad92bf793fe1030cf934313521ac659617075341",
+  "norm_stats_sha256": "356b7d37c12bb3e48674c842559200e98ed539b2d9a2c60d352c256af51045f8",
+  "repo_id": "local/fr3_hiveboard_train"
+}

@@ -1,0 +1,8 @@
+{
+  "verified": true,
+  "config_fields": 26,
+  "method": "Bundle config.py and fr3_policy.py executed in memory using the Nexus OpenPI environment; all serialized TrainConfig fields compared with W&B API config.",
+  "run": "0pczxy2h",
+  "date": "2026-11-12",
+  "naming_update": "Dataset identifier renamed to local/fr3_hiveboard_train; all other training configuration fields retained."
+}

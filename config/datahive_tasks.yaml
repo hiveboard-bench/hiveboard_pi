@@ -1,0 +1,124 @@
+# Bundled HiveBoard attachment (task) registry.
+#
+# This mirrors the 13 official HiveBoard evaluation conditions from
+# HiveBoard's Evaluation Runner
+# (https://hiveboard-bench.github.io/hivedocs/benchmark/evaluation-runner),
+# so `attachment_id` here means the same thing as `attachment_id` in a
+# HiveBoard submission. `composed_assembly: true` marks attachments made
+# of multiple stages that must be completed in sequence (stage_reached is
+# meaningful for these and required in the trial annotation).
+#
+# Labs can override/extend this list by placing an attachments.yaml with
+# the same shape at the root of their samples/ directory.
+valve_ball:
+  name: Ball valve
+  family: Torque
+  timeout: 60
+  composed_assembly: false
+  success: Rotate the handle 90° from the closed state to the open state.
+  reset: Return the handle to the closed position and confirm that the attachment is fully seated.
+  image: torque_valve_noFriction_3d.png
+valve_ball_ring:
+  name: Ball valve with friction ring
+  family: Torque
+  timeout: 90
+  composed_assembly: false
+  success: Rotate the handle 90° from closed to open with the friction ring fitted.
+  reset: Fit the friction ring, return the handle to closed, and confirm that the attachment is seated.
+  image: torque_valve_noFriction_3d.png
+valve_gate_small:
+  name: Small gate valve
+  family: Torque
+  timeout: 90
+  composed_assembly: false
+  success: Complete one full turn of the valve stem.
+  reset: Return the stem to the marked initial orientation without changing the board position.
+  image: small_valve_3d.png
+valve_gate_large:
+  name: Large gate valve
+  family: Torque
+  timeout: 120
+  composed_assembly: false
+  success: Complete one full turn of the valve stem.
+  reset: Return the stem to the marked initial orientation without changing the board position.
+  image: big_valve_3d.png
+circuit_breaker:
+  name: Circuit breaker
+  family: Torque
+  timeout: 60
+  composed_assembly: false
+  success: Move the toggle to the opposite state and hold it there.
+  reset: Return the toggle to its initial state and confirm that it moves freely.
+  image: switch_3d.png
+light_bulb:
+  name: Light bulb and socket
+  family: Precision
+  timeout: 120
+  composed_assembly: false
+  success: Thread the bulb into the socket until it is seated.
+  reset: Remove the bulb, restore the documented starting pose, and inspect the thread.
+  image: lamp_3d.png
+thread_m8:
+  name: M8 threaded fastener
+  family: Precision
+  timeout: 120
+  composed_assembly: false
+  success: Thread the bolt along the available length.
+  reset: Return the bolt to the documented initial engagement and check that the thread is clear.
+  image: m8_3d.png
+thread_m30:
+  name: M30 threaded fastener
+  family: Precision
+  timeout: 120
+  composed_assembly: false
+  success: Thread the bolt along the available length.
+  reset: Return the bolt to the documented initial engagement and check that the thread is clear.
+  image: m30_3d.png
+peg_insertion:
+  name: Threaded peg insertion
+  family: Precision
+  timeout: 120
+  composed_assembly: false
+  success: Thread the free 8 mm peg into the empty socket until it is seated.
+  reset: Remove the peg and return it to the initial pose next to the empty socket.
+  image: peg_and_hole_3d.png
+button:
+  name: Covered button
+  family: Composed assembly
+  timeout: 60
+  composed_assembly: true
+  n_stages: 2
+  stages: [Open cover, Press button]
+  success: Open the cover and press the button.
+  reset: Close the cover and confirm that the button has returned.
+  image: button_3d.png
+lock:
+  name: Lock and key
+  family: Composed assembly
+  timeout: 180
+  composed_assembly: true
+  n_stages: 3
+  stages: [Grasp key, Insert key vertically, Rotate to unlock]
+  success: Grasp the key, insert it vertically, and rotate it to unlock.
+  reset: Remove the key, return the lock to its initial state, and restore the key pose.
+  image: key_3d.png
+drawer:
+  name: Sliding drawer
+  family: Composed assembly
+  timeout: 120
+  composed_assembly: true
+  n_stages: 3
+  stages: [Grasp handle, Pull open, Push closed]
+  success: Grasp the handle, pull the drawer open, and push it closed.
+  reset: Return the drawer to the fully closed initial position.
+  image: box_3d.png
+shock_absorber:
+  name: Shock absorber
+  family: Composed assembly
+  timeout: 180
+  composed_assembly: true
+  n_stages: 3
+  stages: [Grasp pin, Align with hole, Insert fully]
+  success: Grasp the pin, align it with the hole, and insert it fully.
+  reset: Remove the pin, restore its starting pose, and check both occupied board cells.
+  image: spring_3d.png

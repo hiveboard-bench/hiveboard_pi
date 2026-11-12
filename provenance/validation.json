@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-12",
+  "passed": [
+    "make help and dry-run of train/resume/smoke/evaluate",
+    "Python AST and bash -n for package scripts",
+    "uv sync --frozen with Python 3.11 in temporary validation environment",
+    "make setup in temporary validation environment",
+    "make verify in temporary validation environment",
+    "All 26 serialized TrainConfig fields compared with W&B API configuration",
+    "Historical conversion of numeric arrays for all 447 raw HDF5 episodes; exact split frame counts",
+    "All 894 raw front/wrist video files present",
+    "Historical source verified before naming changes; training parameters and numerical processing retained"
+  ],
+  "not_run": [
+    "Full LeRobot video conversion",
+    "Normalization recomputation and resulting converted-dataset fingerprint comparison",
+    "GPU smoke test",
+    "30000-step training"
+  ],
+  "package_excludes": [
+    "Datasets",
+    "Model weights",
+    "Checkpoints",
+    "Virtual environment",
+    "SSH passwords",
+    "W&B API credentials"
+  ]
+}

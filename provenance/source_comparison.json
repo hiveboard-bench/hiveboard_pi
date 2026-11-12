@@ -1,0 +1,63 @@
+{
+  "historical_commit": "9807007161ff94042ba52a1cbb7093d9275f0063",
+  "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+  "historical_files": [
+    {
+      "path": "training/openpi/wandb_run_info.py",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/run_smoke_test.sh",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/evaluate_checkpoints.py",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/norm_stats_guard.py",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/configure_wandb.sh",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/run_training.sh",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/compute_norm_stats_without_video_decode.py",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/data/convert_hiveboard_to_lerobot.py",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/integration/install_pi_variant_configs.py",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/integration/fr3_policy.py",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/integration/install_openpi_integration.sh",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/integration/config.patch",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "training/openpi/experiments/manifests/hiveboard/success_and_suboptimal.jsonl",
+      "matched_before_datahive_adaptation": true
+    },
+    {
+      "path": "tools/hiveboard_episode.py",
+      "matched_before_datahive_adaptation": true
+    }
+  ],
+  "note": "Historical comparison before DataHive support. Current converter and config installer have since been adapted; original evidence remains archived."
+}

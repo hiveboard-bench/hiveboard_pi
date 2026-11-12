@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-12",
+  "datahive_commit": "1ccea29e5b8de510bfe311ca9100b39d762f909d",
+  "tested_schema_versions": [
+    "datahive_episode_v0",
+    "datahive_episode_v1"
+  ],
+  "tests": "19 tests passed after English and Git-readiness review, including actual DataHive API fixtures and smoke checkpoint orchestration.",
+  "cli": "make prepare tested end to end on synthetic DataHive samples with all three splits",
+  "reference_mode": "Model and optimizer checked against archived W&B configuration; reference dataset mode retained",
+  "not_run": [
+    "Real DataHive collection (none available)",
+    "GPU smoke training",
+    "30000-step training",
+    "Physical robot deployment"
+  ],
+  "additional_checks": [
+    "make verify for DataHive and reference modes",
+    "make prepare end to end with synthetic samples",
+    "too-small training split rejected before normalization",
+    "empty/unannotated real samples produce an exclusion report",
+    "Python syntax, bash -n and Ruff F checks"
+  ],
+  "datahive_repository": "https://github.com/hiveboard-bench/DataHive"
+}

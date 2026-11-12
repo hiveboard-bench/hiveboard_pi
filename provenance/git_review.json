@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-12",
+  "language": "Project documentation, Makefile help, comments and runtime messages reviewed in English. Original archived evidence preserved.",
+  "git_candidate_files_before_review_report": 121,
+  "credential_scan": "No private keys or matching hard-coded tokens found in source or decompressed reference metadata.",
+  "ignored_files_verified": [
+    ".env",
+    ".secrets/wandb.env",
+    "local.mk",
+    "data/dataset_hiveboard",
+    "lerobot/local/example/data.parquet",
+    "openpi/.venv/bin/python",
+    ".pytest_cache/test",
+    "logs/train.log",
+    "weights.safetensors",
+    "recording.h5",
+    "recording.mp4"
+  ],
+  "not_run": [
+    "GPU training",
+    "Real DataHive collection",
+    "Physical robot deployment"
+  ],
+  "publishing": "No repository, commit or remote push created.",
+  "git_candidate_files": 126,
+  "tests": "19 tests passed, including full video conversion, gripper parameter validation and smoke checkpoint checks.",
+  "gitignore_fix": "Anchored generated data/manifests directories to the project root so converter source and reference manifests remain tracked.",
+  "clean_snapshot_validation": "make setup, 19 tests, and make verify in both DataHive/reference modes passed from a source snapshot containing only Git candidate files; no local data symlink or runtime folders included."
+}
